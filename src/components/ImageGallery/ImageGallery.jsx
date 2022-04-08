@@ -1,9 +1,10 @@
 import './ImageGallery.scss'
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem'
 
 const ImageGallery = () => {
     return (
         <ul className="imageGallery">
-        {/* Набор <li> с изображениями */}
+            <ImageGalleryItem />
         </ul>)
 }
 

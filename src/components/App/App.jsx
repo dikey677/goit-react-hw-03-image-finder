@@ -22,7 +22,7 @@ export default class App extends React.Component {
     return (
       <div className='app'>
         <Searchbar />
-        <ImageGallery />
+        <ImageGallery onClick={ this.toggleModal }/>
         <button type='button' onClick={ this.toggleModal }>Открыть модальное окно</button>
         {this.state.showModal && <Modal onClose={ this.toggleModal } onClick={ this.toggleModal } onClickBackDrop={ this.toggleModal }></Modal>}
         
