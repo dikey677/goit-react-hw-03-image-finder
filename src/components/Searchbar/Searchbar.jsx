@@ -1,24 +1,51 @@
+import React from "react";
+import { toast } from "react-toastify";
 import './Searchbar.scss'
 
-const Searchbar = () => {
-    return (
-        <header className="searchbar">
-        <form className="searchForm">
-            <button type="submit" className="searchForm-button">
-            <span className="searchForm-button-label">Search</span>
-            </button>
+export default class Searcbar extends React.Component {
+    state = {
+        imageName: '',
+        }
+    
+    handleInputChange = (e) => {
+        this.setState({ imageName: e.currentTarget.value.toLowerCase() });
+        // console.log(this.state.imageName)
+        
+    }
 
-            <input
-            className="searchForm-input"
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            />
-        </form>
-        </header>
-    )
+    handleSubmit = e => {
+        e.preventDefault()
+
+        if (this.state.imageName.trim() === '') {
+            toast.error('Ввидите название изображения!')
+            return
+        }
+
+        this.props.onSubmit(this.state.imageName)
+        this.setState({ imageName: '' })
+        
+    }
+    
+    render() {
+        return (
+            <header className="searchbar">
+                <form className="searchForm" onSubmit={this.handleSubmit}>
+                    <button type="submit" className="searchForm-button">
+                        <span className="searchForm-button-label">Search</span>
+                    </button>
+
+                    <input
+                        onChange={this.handleInputChange}
+                        className="searchForm-input"
+                        type="text"
+                        autoComplete="off"
+                        autoFocus
+                        placeholder="Search images and photos"
+                    />
+                </form>
+            </header>
+        )
+    }
+    
+
 }
-
-export default Searchbar
-
