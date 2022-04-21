@@ -5,7 +5,7 @@ import './App.scss'
 import Searchbar from '../Searchbar/Searchbar'
 import ImageGallery from '../ImageGallery/ImageGallery'
 
-import Modal from '../Modal/Modal'
+// import Modal from '../Modal/Modal'
 
 
 
@@ -13,14 +13,14 @@ import Modal from '../Modal/Modal'
 export default class App extends React.Component { 
   state = {
     imageName: '',
-    showModal: false
+    // showModal: false
     }
   
-    toggleModal = () => {
-      this.setState(({showModal}) => ({
-      showModal: !showModal
-    }))
-    }
+    // toggleModal = () => {
+    //   this.setState(({showModal}) => ({
+    //   showModal: !showModal
+    // }))
+    // }
   
   handleFormSubmit = imageName => {
       this.setState({imageName})
@@ -30,10 +30,10 @@ export default class App extends React.Component {
     return (
       <section className='app'>
         <Searchbar onSubmit={ this.handleFormSubmit} />
-        <ImageGallery onClick={this.toggleModal} imageName={this.state.imageName}/>
+        <ImageGallery imageName={this.state.imageName}/>
         
-        <button type='button' onClick={this.toggleModal}>Открыть модальное окно</button>
-        {this.state.showModal && <Modal onClose={ this.toggleModal } onClick={ this.toggleModal } onClickBackDrop={ this.toggleModal }></Modal>}
+        {/* <button type='button' onClick={this.toggleModal}>Открыть модальное окно</button>
+        {this.state.showModal && <Modal onClose={ this.toggleModal } onClick={ this.toggleModal } onClickBackDrop={ this.toggleModal }></Modal>} */}
         
         <ToastContainer autoClose={3000} />
       </section>

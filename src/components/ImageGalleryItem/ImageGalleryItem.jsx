@@ -5,11 +5,11 @@ export default class ImageGalleryItem extends React.Component {
     
 
     render() {
-        const { pageURL, alt} = this.props
+        const { pageURL, alt, largeImageURL} = this.props
 
     return (
-        <li className="ImageGalleryItem">
-            <img  className='imageGalleryItem-image' src={pageURL} alt={alt} />
+        <li className="ImageGalleryItem" onClick={() => this.props.onShowModal(largeImageURL)}>
+            <img className='imageGalleryItem-image' src={pageURL} alt={alt} />
         </li>
     )
   }

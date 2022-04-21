@@ -23,6 +23,7 @@ export default class Searcbar extends React.Component {
 
         this.props.onSubmit(this.state.imageName)
         this.setState({ imageName: '' })
+        e.target.reset()
         
     }
     

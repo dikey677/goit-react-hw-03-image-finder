@@ -10,7 +10,7 @@ export default class Modal extends React.Component {
     };
 
     componentWillUnmount() {
-        window.removeEventListener('keydown',this. handleKeyDown)
+        window.removeEventListener('keydown',this.handleKeyDown)
      }
     
     handleKeyDown = (e) => {
@@ -26,15 +26,13 @@ export default class Modal extends React.Component {
     }
 
     render() {
-        
+        const { largeImageURL, alt } = this.props
 
         return createPortal(
         <div className="overlay" onClick={this.handleBackdropClick }>
             <div className="modal">
-                <img src="" alt="" />
+                <img src={largeImageURL} alt={alt} />
             </div>
-                
-            <button type='button' onClick={ this.props.onClick }>Закрыть модальное окно</button>
         </div>, modalRoot)
     }
 }
