@@ -3,6 +3,9 @@ import './ImageGallery.scss'
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem'
 import fetchImage from '../../services/fetchImage'
 import Modal from '../Modal/Modal'
+import Button from '../Button/Button'
+
+
 
 export default class ImageGallery extends React.Component {
     state = {
@@ -10,12 +13,16 @@ export default class ImageGallery extends React.Component {
         error: null,
         status: 'idle',
         showModal: false,
-        modalLargeImg: ''
+        modalLargeImg: '',
+        page: 1,
+        maxPage: 0,
     }
 
     async componentDidUpdate(prevProps, prevState) {
         const prevName = prevProps.imageName
         const currentName = this.props.imageName
+        const currentPages = this.state.page
+        
 
         if (prevName !== currentName) {
             console.log('Изменилось название изображения')
@@ -26,9 +33,9 @@ export default class ImageGallery extends React.Component {
             
             
             fetchImage
-                .fetchAPI(currentName)
-                .then(data => this.setState({ data, status: 'resolved' }))
-                .catch(error=> this.setState({error, status: 'rejected'}))
+                .fetchAPI(currentName, currentPages)
+                .then(data => this.setState({ data: data.hits, status: 'resolved' }))
+                .catch(error=> this.setState({ error, status: 'rejected' }))
                     
         }
         console.log(this.state.data)
@@ -39,8 +46,20 @@ export default class ImageGallery extends React.Component {
     }
 
     toggleModalClose = () => {
-         this.setState({ showModal: false}) 
+         this.setState({ showModal: false }) 
     }
+
+     loadingImageMore = async () => {
+        
+        const currentName = this.props.imageName
+        const currentPages = this.state.page
+       
+        await this.setState({ page: this.state.page + 1, status: 'pending' })
+         console.log(currentPages)
+         fetchImage
+            .fetchAPI(currentName, currentPages)
+            .then(data => this.setState({ data: [...this.state.data, ...data.hits], status: 'resolved' }))
+     }
     
 
     render() {
@@ -71,12 +90,19 @@ export default class ImageGallery extends React.Component {
         }
 
         if (status === "resolved") {
-            return  <ul className="imageGallery">
+            return  <><ul className="imageGallery">
                         {
-                            data && data.hits.map(hit =>
+                            data && data.map(hit =>
                             <ImageGalleryItem key={hit.id} onClick={this.toggleModalOpen} pageURL={hit.webformatURL} largeImageURL={hit.largeImageURL} alt={imageName} onShowModal={this.toggleModalOpen} />)
+                            
+                        
                         }
-                    </ul>   
+                        
+                       
+                        
+                        </ul>   
+                        <Button onLoading={this.loadingImageMore} />
+                    </>
         }
 
         
