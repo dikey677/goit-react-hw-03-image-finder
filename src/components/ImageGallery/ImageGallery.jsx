@@ -29,11 +29,11 @@ export default class ImageGallery extends React.Component {
             // console.log(`Предыдущее имя: ${prevName}`)
             // console.log(`Текущее имя: ${currentName}`)
 
-            this.setState({ status: 'pending' })
+            this.setState({ page: 1, status: 'pending' })
             
             
             fetchImage
-                .fetchAPI(currentName, currentPages)
+                .fetchAPI(currentName, 1)
                 .then(data => this.setState({ data: data.hits, status: 'resolved' }))
                 .catch(error=> this.setState({ error, status: 'rejected' }))
                     
@@ -49,12 +49,12 @@ export default class ImageGallery extends React.Component {
          this.setState({ showModal: false }) 
     }
 
-     loadingImageMore = async () => {
+     loadingImageMore = () => {
         
         const currentName = this.props.imageName
-        const currentPages = this.state.page
+        const currentPages = this.state.page + 1
        
-        await this.setState({ page: this.state.page + 1, status: 'pending' })
+        this.setState({ page: currentPages, status: 'pending' })
          console.log(currentPages)
          fetchImage
             .fetchAPI(currentName, currentPages)
