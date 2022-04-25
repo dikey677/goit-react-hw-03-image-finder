@@ -21,14 +21,10 @@ export default class ImageGallery extends React.Component {
     async componentDidUpdate(prevProps, prevState) {
         const prevName = prevProps.imageName
         const currentName = this.props.imageName
-        const currentPages = this.state.page
-        
 
         if (prevName !== currentName) {
             console.log('Изменилось название изображения')
-            // console.log(`Предыдущее имя: ${prevName}`)
-            // console.log(`Текущее имя: ${currentName}`)
-
+          
             this.setState({ page: 1, status: 'pending' })
             
             
@@ -36,8 +32,12 @@ export default class ImageGallery extends React.Component {
                 .fetchAPI(currentName, 1)
                 .then(data => this.setState({ data: data.hits, status: 'resolved' }))
                 .catch(error=> this.setState({ error, status: 'rejected' }))
-                    
+            
+            
         }
+
+        
+
         console.log(this.state.data)
     }
 
